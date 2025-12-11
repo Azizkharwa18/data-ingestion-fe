@@ -24,4 +24,5 @@ export class DataService {
   checkStatus(taskId: string): Observable<TaskResponse> {
     return this.http.get<TaskResponse>(`${this.apiUrl}/status/${taskId}`);
   }
+
 }

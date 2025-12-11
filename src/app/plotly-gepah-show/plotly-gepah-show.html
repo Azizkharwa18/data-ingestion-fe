@@ -1,0 +1,15 @@
+<div style="padding: 20px;">
+      <h1>📊 Real-Time Analytics Dashboard</h1>
+
+     @if(graphData.data.length > 0){
+<div>
+        <plotly-plot
+          [data]="graphData.data"
+          [layout]="graphData.layout"
+          [config]="{responsive: true}">
+        </plotly-plot>
+      </div>
+     }
+
+      <button (click)="refreshData()">Refresh Graph</button>
+    </div>
