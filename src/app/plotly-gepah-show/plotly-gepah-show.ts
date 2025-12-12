@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
+
 import { PlotlyModule } from 'angular-plotly.js';
 
 @Component({
   selector: 'app-plotly-gepah-show',
-  imports: [CommonModule, PlotlyModule],
+  imports: [CommonModule,PlotlyModule],
+  standalone: true,
   templateUrl: './plotly-gepah-show.html',
   styleUrl: './plotly-gepah-show.css',
 })
 export class PlotlyGepahShow implements OnInit {
-http = inject(HttpClient);
+  http = inject(HttpClient);
 
   // Plotly Structure
   graphData: any = {
@@ -23,7 +25,7 @@ http = inject(HttpClient);
   }
 
   refreshData() {
-    this.http.get<any[]>('http://localhost:5000/api/metrics').subscribe(rows => {
+    this.http.get<any[]>('http://localhost:8000/api/metrics').subscribe(rows => {
       this.processDataForPlotly(rows);
     });
   }

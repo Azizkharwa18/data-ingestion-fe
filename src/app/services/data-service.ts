@@ -13,7 +13,7 @@ export interface TaskResponse {
 })
 export class DataService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api';
+  private apiUrl = 'http://localhost:8000/api';
 
   startProcessing(): Observable<{ task_id: string }> {
     return this.http.post<{ task_id: string }>(`${this.apiUrl}/start-task`, {

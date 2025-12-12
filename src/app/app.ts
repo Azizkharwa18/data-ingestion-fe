@@ -3,10 +3,12 @@ import { timer, switchMap, takeWhile, finalize } from 'rxjs';
 import { DataService } from './services/data-service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { PlotlyModule } from 'angular-plotly.js';
 
 @Component({
   selector: 'app-root',
-  standalone: true, imports: [CommonModule, RouterOutlet],
+  standalone: true,
+  imports: [CommonModule,RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

@@ -4,8 +4,6 @@ import { App } from './app/app';
 
 // // 1. Import Plotly and the wrapper module
 // import { PlotlyModule } from 'angular-plotly.js';
-// import * as PlotlyJS from 'plotly.js-dist-min';
-
 // // 2. Register the Plotly instance manually
 // // Check if 'default' exists (common in Angular 17+ / Esbuild builds)
 // (PlotlyModule as any).plotlyjs = (PlotlyJS as any).default || PlotlyJS;
