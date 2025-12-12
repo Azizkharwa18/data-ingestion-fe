@@ -1,29 +1,29 @@
-<div style="padding: 2rem; font-family: sans-serif;">
-      <h1>🚀 Data Ingestion Pipeline</h1>
+<div style="padding: 2rem; font-family: sans-serif; max-width: 800px; margin: 0 auto;">
+  <h1 style="text-align: center;">🚀 Data Ingestion Pipeline</h1>
 
-      <div class="card">
-        <h3>Pipeline Control</h3>
-        <p>Trigger Dask processing and PGP encryption.</p>
+  <div class="card">
+    <h3>Pipeline Control</h3>
+    <p>Trigger High-Performance Polars ingestion & PGP encryption.</p>
 
-        <button
-          (click)="triggerPipeline()"
-          [disabled]="isLoading()"
-          style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
-          {{ isLoading() ? 'Processing...' : 'Start Ingestion' }}
-        </button>
-      </div>
+    <button (click)="triggerPipeline()" [disabled]="isLoading()" class="primary-btn">
+      {{ isLoading() ? 'Processing...' : 'Start Ingestion' }}
+    </button>
 
-      <div *ngIf="statusMessage()" style="margin-top: 20px; padding: 10px; background: #f0f0f0;">
-        <strong>Status:</strong> {{ statusMessage() }}
-      </div>
+   @if(isLoading() || progress() === 100){ <div class="progress-container">
+      <div class="progress-bar" [style.width.%]="progress()"></div>
+    </div>}
 
-      <div *ngIf="finalResult()" style="margin-top: 20px;">
-        <h3>✅ Pipeline Complete</h3>
-        <pre style="background: #333; color: #0f0; padding: 15px; overflow-x: auto;">
-          {{ finalResult() | json }}
-        </pre>
-        <p><em>Note: The payload is encrypted (PGP) as per your security requirements.</em></p>
-      </div>
+    <div class="status-text" *ngIf="statusMessage()">
+      {{ statusMessage() }}
     </div>
+  </div>
 
-    <router-outlet></router-outlet>
+  @if(finalResult()){
+  <div class="result-box">
+    <h3>✅ Pipeline Complete</h3>
+    <pre>{{ finalResult() | json }}</pre>
+    <p><em>Note: The payload is encrypted (PGP) as per your security requirements.</em></p>
+  </div>}
+</div>
+
+<router-outlet></router-outlet>

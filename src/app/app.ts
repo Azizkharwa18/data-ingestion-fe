@@ -16,6 +16,7 @@ export class App {
   protected readonly title = signal('distributed-processing-fe');
   private dataService = inject(DataService);
 
+  progress=signal(0);
   isLoading = signal(false);
   statusMessage = signal('');
   finalResult = signal<any>(null);
@@ -37,22 +38,33 @@ export class App {
     });
   }
 
-  pollStatus(taskId: string) {
-    // Poll every 2 seconds until status is SUCCESS or FAILURE
-    timer(0, 2000)
-      .pipe(
-        switchMap(() => this.dataService.checkStatus(taskId)),
-        takeWhile(res => res.status !== 'SUCCESS' && res.status !== 'FAILURE', true),
-        finalize(() => this.isLoading.set(false))
-      )
-      .subscribe((res) => {
-        this.statusMessage.set(`Current State: ${res.status}`);
-
-        if (res.status === 'SUCCESS') {
-          this.finalResult.set(res.result);
-        } else if (res.status === 'FAILURE') {
-          this.statusMessage.set('Pipeline Failed.');
-        }
-      });
+pollStatus(taskId: string) {
+    // Poll every 200ms (0.2 seconds) to catch the fast completion
+    timer(0, 200).pipe(
+      switchMap(() => {
+        // While waiting, advance progress bar artificially to look "alive"
+        // Stops at 90% until we get a true SUCCESS response
+        this.progress.update(p => (p < 90 ? p + Math.random() * 15 : p));
+        return this.dataService.checkStatus(taskId);
+      }),
+      takeWhile(res => {
+        const isFinished = res.status === 'SUCCESS' || res.status === 'FAILURE';
+        // If finished, ensure we complete the observable stream
+        return !isFinished;
+      }, true), // 'true' includes the final emission (SUCCESS/FAILURE)
+      finalize(() => this.isLoading.set(false))
+    ).subscribe((res) => {
+      if (res.status === 'SUCCESS') {
+        this.progress.set(100); // Snap to 100%
+        this.statusMessage.set('✅ Ingestion Complete!');
+        this.finalResult.set(res.result);
+      } else if (res.status === 'FAILURE') {
+        this.progress.set(0); // Reset on failure
+        this.statusMessage.set(`❌ Pipeline Failed: ${res.result}`);
+      } else {
+        // While PENDING/STARTED
+        this.statusMessage.set(`Processing... (${Math.round(this.progress())}%)`);
+      }
+    });
   }
 }
