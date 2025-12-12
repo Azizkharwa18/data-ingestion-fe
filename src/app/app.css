@@ -1,0 +1,72 @@
+/* Container Card */
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Button Styling */
+.primary-btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.primary-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.primary-btn:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+/* Progress Bar Container */
+.progress-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  margin: 20px 0;
+  height: 10px;
+  overflow: hidden;
+}
+
+/* The Moving Bar */
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  border-radius: 10px;
+  transition: width 0.2s ease-out; /* Smooth transition */
+}
+
+/* Status Text */
+.status-text {
+  font-weight: bold;
+  color: #555;
+  margin-top: 10px;
+}
+
+/* Result Box */
+.result-box {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+pre {
+  background: #2d2d2d;
+  color: #50fa7b; /* Matrix Green */
+  padding: 15px;
+  border-radius: 6px;
+  overflow-x: auto;
+  text-align: left;
+}
